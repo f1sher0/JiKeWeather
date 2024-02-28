@@ -1,0 +1,6 @@
+<!--pages/welcome.wxml-->
+<view class="wrapper_welcome">
+  <text style="position: fixed;left: 37vw;top: 5vh;font-size: 20pt;font-weight: 500;color: white;">使用指南</text>
+  <image src="{{img_src}}" mode="aspectFit" class="img"></image>
+  <button style="position: fixed;bottom: 10vh;left: 35vw;background-color: white;width: 30vw;opacity: 0.6;font-size: 11pt;" bindtap="jump">立即体验</button>
+</view>

@@ -1,0 +1,54 @@
+<view class="wrapper">
+  <view class="POI-info">
+    <text style="font-weight: bold;font-size: 17pt;margin-top: 1vh;">{{title}}</text>
+    <text style="font-weight:500;font-size: 9pt;margin-top: 1vh;">{{address}}</text>
+    <view style="display: flex;width: 76%;height:33%;align-items: center;justify-content: center;">
+      <text style="font-size: 12pt;">{{category}}</text>
+      <image wx:if="{{image_src}}" style="width: 35rpx;height: 35rpx;margin-left: 1vw;" src="{{image_src}}" />
+    </view>
+  </view>
+  <view class="seperator"></view>
+  <view class="POI-weather">
+    <view class="suggestion" style="display: flex;justify-content: center;align-items: center;font-size: 11pt;">
+      <text style="font-weight: bold;font-size: 11pt;">{{suggestion}}</text>
+    </view>
+    <view class='choseQuestion' style="position: absolute;right: 22rpx;top: 25rpx;">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view style="display: flex;align-items: center;background-color: rgba(0, 0, 0, 0.1);padding-left: 10rpx;border-radius: 30rpx;">
+          <text style="font-weight: bold;font-size: 10pt;">间隔</text>
+          <image src="../../images/detail/time.png" mode="aspectFit" style="width: 50rpx;height: 50rpx;"></image>
+        </view>
+      </picker>
+    </view>
+
+    <scroll-view class="scroll" scroll-x="true" enable-flex="true">
+      <view class="scroll-item" wx:for="{{weather_info}}" wx:key="time">
+        <view class="scroll-inside">
+          <view class="time">{{weather_info[index].time}}</view>
+          <image class="kind" src="../../images/weather_color/{{weather_info[index].src}}.png" mode="aspectFit" />
+          <view class="temperature">{{weather_info[index].temperature}}°</view>
+          <view class="wind_dir">{{weather_info[index].wind}}</view>
+          <view class="wind_scale">{{weather_info[index].winds}}级</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <view class="seperator"></view>
+  <map id="POI-map" latitude="{{map_lat}}" longitude="{{map_lng}}" show-location="true" include-points="true" markers="{{markers}}" polyline="{{polylines}}" scale='{{scale}}'>
+    <view wx:if="{{route_info}}" style="width: 34%;height: 5vh;position: fixed;bottom: 7vh;left: 33vw;background-color: rgba(255, 255, 255, 0.6);border-radius: 50rpx;display: flex; justify-content: space-around;align-items: center;">
+      <text style="font-weight: bold;font-size: 9pt;">{{route_distance}}</text>
+      <text style="font-weight: bold;font-size: 9pt">{{route_duration}}</text>
+    </view>
+    <view style="position: fixed; left: 0rpx; bottom: 15rpx;width: 100%;height: 5.5vh;background-color: white;">
+      <view class="trans_type" style="position: fixed; left: 0rpx; bottom: 15rpx;background-color: {{type_sel[0]}};" bindtap="routePlanWalking">
+        <text style="color:{{type_color[0]}};font-weight: bold;">步行</text>
+      </view>
+      <view class="trans_type" style="position: fixed; left: 34vw; bottom: 10rpx;background-color: {{type_sel[1]}};" bindtap="routePlanDriving">
+        <text style="color:{{type_color[1]}};font-weight: bold;">驾车</text>
+      </view>
+      <view class="trans_type" style="position: fixed; right: 0rpx; bottom: 15rpx;background-color: {{type_sel[2]}};" bindtap="routePlanBicycling">
+        <text style="color:{{type_color[2]}};font-weight: bold;">骑行</text>
+      </view>
+    </view>
+  </map>
+</view>

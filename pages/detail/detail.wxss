@@ -1,0 +1,93 @@
+/* pages/detail/detail.wxss */
+.wrapper{
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  /* background: -webkit-linear-gradient(bottom, #33AECC, #4D9EB3)  */
+ background-color:  #F2F2F2;
+}
+.POI-info{
+  margin: 15rpx;
+  margin-bottom: 0;
+  width:94%;
+  height: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 20rpx;
+}
+.POI-weather{
+  width: 100%;
+  height: 28%;
+  background-color: white;
+  position: relative;
+}
+.scroll{
+  height: 80%;
+  width: 100%;
+  white-space: nowrap;
+}
+.suggestion{
+  height: 23%;
+}
+.scroll-item{
+  display: inline-block;
+  height: 100%;
+  width: 20%;
+  margin-left: 0.5vw;
+}
+.scroll-inside{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; 
+  height: 100%;
+}
+.seperator{
+  width: 100%;
+  height: 1.5%;
+  background-color:#F2F2F2;
+  
+}
+.time{
+  margin-top: 1.5vh;
+  font-size: 10pt;
+  color: lightgray;
+}
+.kind{
+  margin-top: 2vh;
+  width: 60rpx;
+  height: 60rpx;
+}
+.temperature{
+  font-size: 10pt;
+  margin-top: 1.5vh;
+}
+.wind_dir{
+  margin-top: 1vh;
+  color: rgb(169, 211, 179);
+  font-size: 10pt;
+}
+.wind_scale{
+  color: lightgray;
+  font-size: 10pt;
+}
+#POI-map{
+  width: 100%;
+  height: 52%;
+}
+.trans_type{
+  background-color: white;
+  width: 32%;height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30rpx;
+  font-size: 11pt;
+}
+
+
+

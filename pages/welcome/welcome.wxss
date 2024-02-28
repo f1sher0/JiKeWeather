@@ -1,0 +1,13 @@
+/* pages/welcome.wxss */
+.wrapper_welcome{
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(63, 103, 135);
+}
+.img{
+  position: fixed;
+  width: 100vw;
+  height: 75vh;
+  bottom: 15vh;
+}
+

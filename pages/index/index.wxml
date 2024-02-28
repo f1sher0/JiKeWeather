@@ -1,0 +1,266 @@
+<!--index.wxml-->
+<view class="wrapper" style="background-image: url({{background_current}});background-size: 100% 100%;">
+  <!-- 弹窗遮罩层 -->
+  <view wx:if="{{isShow}}" class="cover">
+      <!-- 可在此按需求自定义遮罩 -->
+      <view class='cover_child'>
+        <!-- 顶部信息 -->
+        <view class="dialog">
+          <text style="color:black;font-weight: bold;">选择您感兴趣的地点</text>
+        </view>
+        <!-- 选项 -->
+        <view class="choice-area">
+          <view class="choice" wx:for="{{choices}}" wx:key="id" data-id="{{item.id}}" bindtap="select">
+            <image src="../../images/choice/{{item.src}}.png" class="choice-icon" mode="aspectFit">
+            </image>
+            <image src="../../images/choice/chose.png" style="position: absolute;right: 50rpx;bottom: 52rpx;width: 50rpx;height: 50rpx;" mode="aspectFit" wx:if="{{choices_select[item.id]==true}}"></image>
+            <text style="font-size: 9pt;margin-top: 0.5vh;">{{item.kind}}</text>
+          </view>
+        </view>
+        <!-- 底部按钮 -->
+        <view class='btn-group'>
+          <view bindtap="hide">取消</view>
+          <view style="color: #5A6B8F;" bindtap="save">保存</view>
+        </view>
+      </view>
+  </view>
+
+  <view wx:if="{{share_isShow}}" class="cover">
+      <!-- 可在此按需求自定义遮罩 -->
+      <view class='share_cover'>
+        <!-- 顶部信息 -->
+        <view class="dialog">
+          <text style="color:black;font-weight: bold;">分享此刻天气</text>
+        </view>
+        <!-- 选项 -->
+        <view class="choice-area">
+          <view class="choice_weather" wx:for="{{weather_share_choice}}" wx:key="id" data-id="{{item.id}}" bindtap="select_weather">
+            <image src="../../images/weather_color/{{item.src}}.png" class="choice-icon" mode="aspectFit">
+            </image>
+            <image src="../../images/choice/chose.png" style="position: absolute;right: 40rpx;bottom: 42rpx;width: 50rpx;height: 50rpx;" mode="aspectFit" wx:if="{{weather_select[item.id]==true}}"></image>
+            <text style="font-size: 9pt;margin-top: 0.5vh;">{{item.kind}}</text>
+          </view>
+        </view>
+        <!-- 底部按钮 -->
+        <view class='btn-group'>
+          <view bindtap="share_hide">取消</view>
+          <view style="color: #5A6B8F;" bindtap="share_save">确定</view>
+        </view>
+      </view>
+  </view>
+
+  <view wx:if="{{suggestion_isShow}}" class="cover">
+      <!-- 可在此按需求自定义遮罩 -->
+      <view class='suggestion_cover'>
+        <!-- 顶部信息 -->
+        <view class="indice_title">
+          <text style="color:white;font-weight: bold;font-size: 12pt;">{{suggestion_title}}</text>
+        </view>
+        <!-- 选项 -->
+        <view class="suggestion_info">
+          <text style="color: black;font-size: 11pt;font-weight: 500;">{{suggestion_text}}</text>
+        </view>
+        <!-- 底部按钮 -->
+        <view style="width: 50%;height: 17%;background-color: rgb(177, 220, 211);border-radius: 12rpx;display: flex;justify-content: center;align-items: center;position: absolute; bottom: 5%;" bindtap="hide_suggestion">
+          <text style="color: white;font-size: 10pt;font-weight: bold;">我知道了</text>
+        </view>
+      </view>
+  </view>
+
+  <!-- 搜索 -->
+  <view class="search">
+    <view class="left">
+      <!-- 输入框 -->
+      <input class="inputField" confirm-type="search" placeholder="想去哪" value="{{inputContent}}" bindinput="onInputChange" bindconfirm="onBtnClick" />
+      <!-- 清空图标 -->
+      <image class="clearBtn" src="../../images/index/clear.png" style="display: {{inputContent.length > 0 ? 'block' : 'none'}}" bindtap="clearInputContent"></image>
+      <!-- <image src="../../images/index/mirco.png" style="display: {{inputContent.length > 0 ? 'none' : 'block'}};width: 38rpx;height: 38rpx;position: absolute;right: 185rpx;"></image> -->
+    </view>
+    <!-- 间隔线 -->
+    <view class="seperator"></view>
+    <!-- 搜索按键 -->
+    <view class="right">
+      <view class="searchBtn" bindtap="onSearchBtnClick">
+        <image class="searchIcon" src="../../images/index/search.png"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 位置，时间，按键 -->
+  <view class="header">
+    <!-- 地址、时间 -->
+    <view class="pos_time">
+      <image class="localIcon" src="../../images/index/location.png"></image>
+      <view class="city" style="font-weight:700;">{{currentLocation}}</view>
+      <view class="date" style="font-weight: 700;">({{date}})</view>
+      <!-- <view class="date" style="font-weight: 700;">(2023/01/01)</view> -->
+    </view>
+    <!-- 更新时间、刷新按钮 -->
+      <view class="update" bindtap="refresh">{{hour}}更新
+      <image class="refreshIcon" src="../../images/index/refresh.png"></image>
+    </view>
+  </view>
+
+  <view class="weather_block">
+    <!-- 当前天气信息 -->
+    <view class="current">
+      <view class="base_info">
+        <!-- 温度 -->
+        <view class="temperature">{{weatherInfo.temperature}}
+          <view class="t_symbol">℃</view>
+        </view>
+        <view class="weather_detail" style="color: white;font-size: 10pt;">
+          <view class="tigan" style="display: flex;align-items: center;justify-content: center;">
+            <image src="../../images/weather/thermometer.png" style="height: 48rpx;width: 48rpx;margin-right: 0.2vw;"></image>
+            <text style="font-size: 11pt;">{{weatherInfo.feel}}°</text>
+            <!-- <text style="font-size: 11pt;">3°</text> -->
+          </view>
+          <view class="wind" style="display: flex;align-items: center;justify-content: center;">
+            <image src="../../images/weather/wind_direction.png" style="height: 48rpx;width: 48rpx;margin-right: 0.2vw;"></image>
+            <text style="font-size: 11pt;">{{weatherInfo.wind}}</text>
+          </view>
+          <view class="kind" style="display: flex;align-items: center;justify-content: center;">
+            <image src="../../images/weather/{{weatherInfo.kind}}.png" style="height: 50rpx;width: 50rpx;margin-right: 0.75vw;"></image>
+            <text style="font-size: 11pt;">{{weatherInfo.kind_cn}}</text>
+            <!-- <text style="font-size: 11pt;">雾</text> -->
+          </view>
+        </view>
+        <view class="share_weather" bindtap="open_share">
+          <text style="color: white;font-size: 10pt;">分享天气</text>
+        </view>
+      </view>
+    </view>
+    <view class="settings">
+      <view class="POI-settings" bindtap="open">
+        <image style="height: 50rpx;width: 50rpx;;" src="../../images/index/setting.png" mode="aspectFit"/>
+      </view>
+    </view>
+  </view>
+
+  <!-- 周围POI -->
+  <swiper class="POI_swiper" autoplay="false"  interval="5000" circular="true">
+    <swiper-item class="swiper_block" wx:for="{{list}}" wx:key="id">
+      <view class="blank"></view>
+      <!-- 内容 -->
+      <view class="POI-content">
+        <!-- POI信息 -->
+        <view class="POI-info">
+          <view class="POI-name">
+            <text class="name" style="font-weight: 700;">{{item.title}}</text>
+          </view>
+          <view class="POI-category" style="font-weight: 700;">
+            {{item.category}}
+          </view>
+          <image src="{{icon_src[index]}}" class="POI-icon" />
+          <view class="POI-detail" bindtap="tiaozhuan" data-id="{{item.id}}" data-lat="{{lat}}" data-lng="{{lon}}">
+            <text style="color: white;font-size: 10pt;font-weight: 700;">更多信息</text>
+            <image src="../../images/index/check.jpg" mode="aspectFit" style="width: 40rpx;height: 40rpx;margin-left: 0.5vw;"></image>
+          </view>
+        </view>
+        <!-- POI天气 -->
+        <view class="POI-weather">
+          <view class="POI-suggestion">
+            <text style="font-size: 11pt;">{{suggestion_current}}</text>
+          </view>
+          <view style="display: flex;justify-content: center;height: 50%;width: 100%;margin-top: 5%;">
+            <view style="width: 30%;height: 90%;display: flex;align-items: center;justify-content: center;">
+              <image src="{{POI_weather_src[index]}}" style="width: 60rpx;height: 60rpx;"></image>
+              <!-- <image src="../../images/weather/wu.png" style="width: 60rpx;height: 60rpx;"></image> -->
+              <text style="font-size: 14.5pt;margin-left: 10%;">{{POI_weather[index].kind_cn}}</text>
+              <!-- <text style="font-size: 14.5pt;margin-left: 10%;">雾</text> -->
+            </view>
+            <view style="width: 50%;height: 80%;display: flex;flex-direction: column;align-items: center;"> 
+              <view style="margin-top: 40rpx;">
+                <text style="font-size: 11pt;">体感气温：</text>
+                <text style="font-size: 11pt;">{{POI_weather[index].ftemp}}</text>
+                <!-- <text style="font-size: 11pt;">较冷</text> -->
+              </view>
+              <view style="margin-top: 40rpx;display: flex;align-items: center;">
+                <text style="font-size: 11pt;">体感湿度：</text>
+                <text style="font-size: 11pt;">{{POI_weather[index].hum}}</text>
+                <!-- <text style="font-size: 11pt;">潮湿</text> -->
+                <!-- <image src="../../images/index/土壤温度10cm.png" mode="aspectFit" style="width: 60rpx;height: 60rpx;margin-left: 1vw;"></image> -->
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 右空栏 -->
+      <view class="blank">
+        <image class="arrowIcon" style="display:block" src="../../images/index/arrow.png"></image>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <!-- 出行建议 -->
+  <swiper class="suggestion_swiper" circular="true" indicator-dots="true">
+    <swiper-item class="suggestion">
+
+      <view class="item" bindtap="show_suggestion2">
+        <image src="../../images/suggestion/clothes.png" class="suggestion-icon" mode="aspectFit" />
+        <view class="suggestion_content">
+          <text>{{suggestion_info[2].category}}</text>
+        </view>
+        <text class="suggestion_tip">穿衣</text>
+      </view>
+
+      <view class="item" bindtap="show_suggestion7">
+        <image src="../../images/suggestion/umbrella.png" class="suggestion-icon" mode="aspectFit" />
+        <view class="suggestion_content">
+          <text>{{suggestion_info[7].category}}</text>
+        </view>
+        <text class="suggestion_tip">舒适</text>
+      </view>
+
+      <view class="item" bindtap="show_suggestion0">
+        <image src="../../images/suggestion/sports.png" class="suggestion-icon" mode="aspectFit" />
+        <view class="suggestion_content">
+          <text>{{suggestion_info[0].category}}</text>
+        </view>
+        <text class="suggestion_tip">运动</text>
+      </view>
+
+      <view class="item" bindtap="show_suggestion15">
+        <image src="../../images/suggestion/sunscreen.png" class="suggestion-icon" mode="aspectFit" />
+        <view class="suggestion_content">
+          <text>{{suggestion_info[15].category}}</text>
+        </view>
+        <text class="suggestion_tip">防晒</text>
+      </view>
+    </swiper-item>
+
+    <swiper-item class="suggestion">
+      <view class="item" bindtap="show_suggestion1">
+        <image src="../../images/suggestion/carwashing.png" class="suggestion-icon" mode="aspectFit" />
+        <view class="suggestion_content">
+          <text>{{suggestion_info[1].category}}</text>
+        </view>
+        <text class="suggestion_tip">洗车</text>
+      </view>
+
+      <view class="item" bindtap="show_suggestion13">
+        <image src="../../images/suggestion/drying.png" class="suggestion-icon" mode="aspectFit" />
+        <view class="suggestion_content">
+          <text>{{suggestion_info[13].category}}</text>
+        </view>
+        <text class="suggestion_tip">晾晒</text>
+      </view>
+
+      <view class="item" bindtap="show_suggestion12">
+        <image src="../../images/suggestion/makeup.png" class="suggestion-icon" mode="aspectFit" />
+        <view class="suggestion_content">
+          <text>{{suggestion_info[12].category}}</text>
+        </view>
+        <text class="suggestion_tip">化妆</text>
+      </view>
+
+      <view class="item" bindtap="show_suggestion8">
+        <image src="../../images/suggestion/tablet.png" class="suggestion-icon" mode="aspectFit" />
+        <view class="suggestion_content">
+          <text>{{suggestion_info[8].category}}</text>
+        </view>
+        <text class="suggestion_tip">感冒</text>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>
