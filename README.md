@@ -22,11 +22,19 @@ To use JiKe Weather, simply search for "JiKe Weather" in the Wechat Mini Program
 
 ## Screenshots
 
-<img src="screenshot/HomePageView.png" alt="HomePageView" width="300">
-<img src="screenshot/feedback.png" alt="Feedback" width="300">
-<img src="screenshot/POIRecommendation.png" alt="POIRecommendation" width="300">
-<img src="screenshot/RoutePlan.png" alt="RoutePlan" width="300">
-<img src="screenshot/Suggestion.png" alt="Suggestion" width="300">
+<div style="display: flex; justify-content: center;">
+    <img src="screenshot/HomePageView.png" alt="HomePageView" width="300" style="margin-right: 20px;">
+    <img src="screenshot/feedback.png" alt="Feedback" width="300">
+</div>
+
+<div style="display: flex; justify-content: center;">
+    <img src="screenshot/POIRecommendation.png" alt="POIRecommendation" width="300" style="margin-right: 20px;">
+    <img src="screenshot/RoutePlan.png" alt="RoutePlan" width="300">
+</div>
+
+<div style="display: flex; justify-content: center;">
+    <img src="screenshot/Suggestion.png" alt="Suggestion" width="300">
+</div>
 ## Contribution
 
 Contributions to JiKe Weather are welcome! If you have any suggestions, bug reports, or feature requests, please feel free to open an issue or submit a pull request on GitHub.
