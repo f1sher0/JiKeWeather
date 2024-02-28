@@ -34,7 +34,7 @@ To use JiKe Weather, simply search for "JiKe Weather" in the Wechat Mini Program
 
 <div style="display: flex; justify-content: center;">
     <img src="screenshot/Suggestion.png" alt="Suggestion" width="300">
-    <img src="screenshot/Timeinquiry.png" alt="Timeinquiry" width="300">
+    <img src="screenshot/TimeInquiry.png" alt="Timeinquiry" width="300">
 </div>
 ## Contribution
 
